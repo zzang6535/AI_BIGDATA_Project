@@ -98,7 +98,7 @@
     <div class="container">
       <!-- Example row of columns -->
       <div class="row">
-        <form action="cart/" method="POST">
+        <!--form action="cart/" method="POST">
           {% csrf_token %}
           <h1>Today's Hot Deal</h1>
           <div class="row">
@@ -116,6 +116,11 @@
             {% endfor %}
           </div>
           <input type="submit" value="Load">
+        </form-->
+        <form action="product/" method = "POST"> {% csrf_token %}
+            <h1>Product List</h1>
+
+          <button type="submit"> 상품 보기</button>
         </form>
       </div>
 

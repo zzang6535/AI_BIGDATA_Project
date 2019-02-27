@@ -28,3 +28,9 @@ class Orders(models.Model):
     order_dow = models.IntegerField()
     order_hour_of_day = models.IntegerField()
     days_since_prior_order = models.IntegerField()
+
+class Basket(models.Model):
+    user_id = models.IntegerField()
+    product_id = models.IntegerField()
+    product_name = models.CharField(max_length=200)
+    aisle_id = models.IntegerField()

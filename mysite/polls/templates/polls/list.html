@@ -1,0 +1,46 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Title</title>
+</head>
+<body>
+    <table class = 'table'>
+        <thread>
+            <tr>
+                <th>상품번호</th>
+                <th>상품명</th>
+                <th>중분류</th>
+                <th>대분류</th>
+            </tr>
+        </thread>
+        {% if product_list %}
+        <tbody>
+        i = 0
+        {% for row in product_list %}
+        <tr>
+            <td>
+            <form action= "{% url 'cart' %}" method = "POST"> {% csrf_token %}
+                <button type="submit" name="product_id" value = {{row.product_id}}> 장바구니 추가</button>
+            </form>
+            </td>
+            <td>{{row.product_id }}</td>
+            <td>{{row.product_name }}</td>
+            <td>{{row.aisle_id }}</td>
+            <td>{{row.department_id }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+    <p>No Data.</p>
+    {% endif %}
+        </tbody>
+    </table>
+    <h>
+        선택한 목록 장바구니에 추가
+
+    </h>
+</body>
+</html>
