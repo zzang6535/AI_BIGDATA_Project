@@ -52,36 +52,74 @@
             <button type="submit" class="btn btn-success">로그인</button>
           </form>
         </div><!--/.navbar-collapse -->
+        <div class="dropdown" align="right">
+            <a role="menuitem" tabindex="-1" href="cart/">장바구니</a>
+            <a role="menuitem" tabindex="-1" href="history/">구매내역</a>
+        </div>
       </div>
     </nav>
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
-      <div class="container">
-        <h1>Hello, world!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
-      </div>
+    <div class="jumbotron" style="width: 100%; text-align: center">
+      <img src="{% static 'image/logo1.jpg' %}" alt="로고" style="width: 100%; max-width: 760px; vertical-align: middle" />
+
+        <h1>Welcome to Daehyeon E Shop</h1>
+        <p> 새로운 대현 온라인 쇼핑을 확인해보세요 </p>
+<!--        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>-->
     </div>
 
     <div class="container">
       <!-- Example row of columns -->
       <div class="row">
-        <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div>
-        <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-       </div>
-        <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-        </div>
+        <form action="cart/" method="POST">
+          {% csrf_token %}
+          <h1>Today's Hot Deal</h1>
+          <div class="row">
+ <!--           <div class="col-sm-6 col-md-4">
+              <div class="thumbnail">
+                <img src="{% static 'image/apple.jpg' %}" alt="apple">
+                <div class="caption">
+                  <h3>apple</h3>
+                  <p>red apple</p>
+                  <p align="right"><input type="checkbox" name="p[]"><a href="cart/" class="btn btn-primary" role="button">Cart</a></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+              <div class="thumbnail">
+                <img src="{% static 'image/banana' %}" alt="banana">
+                <div class="caption">
+                  <h3>banana</h3>
+                  <p>yellow apple</p>
+                  <p align="right"><input type="checkbox" name="p[]"><a href="cart/" class="btn btn-primary" role="button">Cart</a></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+              <div class="thumbnail">
+                <img src="{% static 'image/tomato.jpg' %}" alt="tomato">
+                <div class="caption">
+                  <h3>tomato</h3>
+                  <p>red tomato</p>
+                  <p align="right"><input type="checkbox" name="p[]"><a href="cart/" class="btn btn-primary" role="button">Cart</a></p>
+                </div>
+              </div>
+            </div>-->
+            {% for raw in order_list %}
+            <div class="col-sm-6 col-md-4">
+              <div class="thumbnail">
+                <img src="{% static 'image/x.jpg' %}" alt="tomato">
+                <div class="caption">
+                  <h3>{{raw.product_name|truncatechars:30 }}</h3>
+                  <p>{{raw.product_id }}</p>
+                  <p align="right"><input type="checkbox" name="p[]"><a href="cart/" class="btn btn-primary" role="button">Cart</a></p>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          <input type="submit" value="Load">
+        </form>
       </div>
 
       <hr>
