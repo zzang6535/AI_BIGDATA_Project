@@ -34,3 +34,7 @@ class Basket(models.Model):
     product_id = models.IntegerField()
     product_name = models.CharField(max_length=200)
     aisle_id = models.IntegerField()
+
+class History(models.Model):
+    user_id = models.IntegerField()
+    product_name = models.CharField(max_length=200)

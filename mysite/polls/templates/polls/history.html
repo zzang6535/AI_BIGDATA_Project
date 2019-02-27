@@ -7,16 +7,25 @@
 </head>
 <body>
     <h1>구매내역</h1>
-
-    <div class="col-sm-6 col-md-4">
-        <div class="thumbnail">
-            <img src="{% static 'image/banana' %}" alt="banana">
-            <div class="caption">
-                <h3>banana</h3>
-                <p>yellow apple</p>
-                <p align="right"><input type="checkbox" name="p[]"><a href="/cart" class="btn btn-primary" role="button">Cart</a></p>
-            </div>
-        </div>
-    </div>
+    <table class = 'table'>
+        <thread>
+            <tr>
+                <th>고객번호</th>
+                <th>상품명</th>
+            </tr>
+        </thread>
+        {% if history_list %}
+        <tbody>
+        {% for raw in history_list %}
+        <tr>
+            <td>{{raw.user_id }}</td>
+            <td>{{raw.product_name }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <p>No Data.</p>
+        {% endif %}
+        </tbody>
+    </table>
 </body>
 </html>

@@ -7,7 +7,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.db.models import Count
 
-from .models import UserType, Products, Basket
+from .models import UserType, Products, Basket, History
 
 from .forms import LoginForm
 
@@ -15,6 +15,7 @@ import csv
 
 # Create your views here.
 def index(request) :
+
     if request.user.username and request.user.username != 'admin':
         Grade = UserType.objects.get(id=int(request.user.username))
 
@@ -51,8 +52,18 @@ def index(request) :
         return render(request, 'polls/index.html', context)
 
 def history(request) :
-    li = request.POST.get("p")
-    return render(request, 'polls/history.html')
+#    if request.POST:
+#        form = request.POST['user_id']
+#        temp = History.objects.get(user_id = int(form))
+
+#        hist = History(user_id=temp.user_id,
+#                       product_name=temp.product_name)
+#        hist.save()
+    history_list = History.objects.filter(user_id=int(request.user.username))
+    context = {
+        "history_list" : history_list
+    }
+    return render(request, 'polls/history.html', context)
 
 def cart(request) :
     if request.POST:
