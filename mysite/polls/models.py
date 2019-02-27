@@ -1,5 +1,4 @@
 from django.db import models
-from django import forms
 
 # Create your models here.
 class Question(models.Model) :
@@ -20,7 +19,3 @@ class Question(models.Model) :
 
     def __str__(self):
         return str(self.order_id)
-
-
-class LoadForm(forms.Form) :
-    filename = forms.CharField(label = 'filename', max_length = 100)
