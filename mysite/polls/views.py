@@ -23,11 +23,12 @@ def index(request) :
     return render(request, 'polls/index.html', context)
 
 def history(request) :
+    li = request.POST.get("p")
     order_list = Question.objects.order_by()
     context = {
         'order_list': order_list,
     }
-    return render(request, 'polls/index.html', context)
+    return render(request, 'polls/history.html', context)
 
 def cart(request) :
     li = request.POST.get("p")
@@ -37,7 +38,6 @@ def cart(request) :
         'li' : li,
     }
     return render(request, 'polls/cart.html', context)
-
 
 # 회원가입
 class UserRegistrationView(CreateView):

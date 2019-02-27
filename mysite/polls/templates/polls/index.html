@@ -41,11 +41,14 @@
           </button>
           <a class="navbar-brand" href="#">Daehyeon E Shop</a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
+        <div id="navbar" class="navbar-collapse collapse" align="right" style=" display:flex; width:45%;text-align:center; float:right;" >
+            <p style="float:right; color:white;">WELCOME: <span class="glyphicon glyphicon-star"></span></p>
+            <p style="float:right; color:white;">FAMILY: <span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></p>
+            <p style="float:right; color:white;">VIP: <span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></p>
           {% if not request.user.is_authenticated %}
-          <form action = "{% url 'login' %}" class="navbar-form navbar-right" method = "post" >
+          <form action = "{% url 'login' %}" class="navbar-form navbar-right" method = "post">
             {% csrf_token %}
-            <button type="submit" class="btn btn-success">로그인</button>
+            <button type="submit" class="btn btn-success" style="float:right">로그인</button>
           </form>
           {% endif %}
           {% if request.user.is_authenticated %}
@@ -56,16 +59,22 @@
           </div>
           {% endif %}
         </div><!--/.navbar-collapse -->
-        <div class="dropdown" align="right">
-            <a role="menuitem" tabindex="-1" href="cart/">장바구니</a>
-            <a role="menuitem" tabindex="-1" href="history/">구매내역</a>
+          <div style="width:50%; margin:auto; float:right">
+        <div class="dropdown" align="right" style=" display:flex; width:45%;text-align:center; float:right;" >
+            <a href="cart/" >
+                <button type="button" class="btn btn-default btn-sm" ><span class="glyphicon glyphicon-shopping-cart"></span> 장바구니</button>
+            </a>
+            <a href="history/">
+                <button type="button" class="btn btn-default btn-sm" ><span class="glyphicon glyphicon-list"></span> 구매내역 </button>
+            </a>
         </div>
+          </div>
       </div>
     </nav>
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron" style="width: 100%; text-align: center">
-      <img src="{% static 'image/logo1.jpg' %}" alt="로고" style="width: 100%; max-width: 760px; vertical-align: middle" />
+      <img src="{% static 'image/logo1.jpg' %}" alt="로고" style="width: 100%; max-width: 380px; vertical-align: middle" />
 
         <h1>Welcome to Daehyeon E Shop</h1>
         <p> 새로운 대현 온라인 쇼핑을 확인해보세요 </p>
