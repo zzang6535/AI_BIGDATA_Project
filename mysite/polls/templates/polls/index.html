@@ -42,9 +42,6 @@
           <a class="navbar-brand" href="#">Daehyeon E Shop</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse" align="right" style=" display:flex; width:45%;text-align:center; float:right;" >
-            <p style="float:right; color:white;">WELCOME: <span class="glyphicon glyphicon-star"></span></p>
-            <p style="float:right; color:white;">FAMILY: <span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></p>
-            <p style="float:right; color:white;">VIP: <span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></p>
           {% if not request.user.is_authenticated %}
           <form action = "{% url 'login' %}" class="navbar-form navbar-right" method = "post">
             {% csrf_token %}
@@ -53,22 +50,39 @@
           {% endif %}
           {% if request.user.is_authenticated %}
           <div class="navbar-form navbar-right">
-            <a class="logout" href="{% url 'logout' %}">
-              <button class="btn btn-logout">로그아웃</button>
-            </a>
+            <table style="{padding:15px;}">
+              <tr>
+                <td>
+                  {% if Grade.user_grade == 1 %}
+                  <p style="float:right; color:white;">VIP: <span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></p>
+                  {% endif %}
+                  {% if Grade.user_grade == 2 %}
+                  <p style="float:right; color:white;">FAMILY: <span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></p>
+                  {% endif %}
+                  {% if Grade.user_grade == 3 %}
+                  <p style="float:right; color:white;">WELCOME: <span class="glyphicon glyphicon-star"></span></p>
+                  {% endif %}
+                </td>
+                <td>
+                  <a href="cart/" >
+                    <button type="button" class="btn btn-default btn-sm" ><span class="glyphicon glyphicon-shopping-cart"></span> 장바구니</button>
+                  </a>
+                </td>
+                <td>
+                  <a href="history/">
+                    <button type="button" class="btn btn-default btn-sm" ><span class="glyphicon glyphicon-list"></span> 구매내역 </button>
+                  </a>
+                </td>
+                <td>
+                  <a class="logout" href="{% url 'logout' %}">
+                    <button class="btn btn-logout">로그아웃</button>
+                  </a>
+                </td>
+              </tr>
+            </table>
           </div>
           {% endif %}
-        </div><!--/.navbar-collapse -->
-          <div style="width:50%; margin:auto; float:right">
-        <div class="dropdown" align="right" style=" display:flex; width:45%;text-align:center; float:right;" >
-            <a href="cart/" >
-                <button type="button" class="btn btn-default btn-sm" ><span class="glyphicon glyphicon-shopping-cart"></span> 장바구니</button>
-            </a>
-            <a href="history/">
-                <button type="button" class="btn btn-default btn-sm" ><span class="glyphicon glyphicon-list"></span> 구매내역 </button>
-            </a>
-        </div>
-          </div>
+
       </div>
     </nav>
 
@@ -88,36 +102,6 @@
           {% csrf_token %}
           <h1>Today's Hot Deal</h1>
           <div class="row">
- <!--           <div class="col-sm-6 col-md-4">
-              <div class="thumbnail">
-                <img src="{% static 'image/apple.jpg' %}" alt="apple">
-                <div class="caption">
-                  <h3>apple</h3>
-                  <p>red apple</p>
-                  <p align="right"><input type="checkbox" name="p[]"><a href="cart/" class="btn btn-primary" role="button">Cart</a></p>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-              <div class="thumbnail">
-                <img src="{% static 'image/banana' %}" alt="banana">
-                <div class="caption">
-                  <h3>banana</h3>
-                  <p>yellow apple</p>
-                  <p align="right"><input type="checkbox" name="p[]"><a href="cart/" class="btn btn-primary" role="button">Cart</a></p>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-6 col-md-4">
-              <div class="thumbnail">
-                <img src="{% static 'image/tomato.jpg' %}" alt="tomato">
-                <div class="caption">
-                  <h3>tomato</h3>
-                  <p>red tomato</p>
-                  <p align="right"><input type="checkbox" name="p[]"><a href="cart/" class="btn btn-primary" role="button">Cart</a></p>
-                </div>
-              </div>
-            </div>-->
             {% for raw in order_list %}
             <div class="col-sm-6 col-md-4">
               <div class="thumbnail">
@@ -152,79 +136,3 @@
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
   </body>
 </html>
-
-
-<!--
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    <title>Title</title>
-</head>
-<body>
-    <table>
-        <tr>
-            <td>
-                <form action = "load/" method = "post">
-                    {% csrf_token %}
-                    <input id="load" type="text" placeholder="enter file name">
-                    <input type="submit" value="Load">
-                </form>
-            </td>
-        </tr>
-    </table>
-
-    {% if order_list %}
-    <table>
-        <thead>
-        <h1>List</h1>
-        </thead>
-        <tbody>
-        <tr>
-            <td>주문 번호</td>
-            <td>user_id</td>
-            <td>order_number</td>
-            <td>order_dow</td>
-            <td>order_hour_if_day</td>
-            <td>days_since_prior_order</td>
-            <td>product_id</td>
-            <td>add_to_cart_order</td>
-            <td>reordered</td>
-            <td>product_name</td>
-            <td>aisle_id</td>
-            <td>department_id</td>
-            <td>department</td>
-            <td>aisle</td>
-        </tr>
-        {% for raw in order_list %}
-        <tr>
-            <td>{{raw.order_id }}</td>
-            <td>{{raw.user_id }}</td>
-            <td>{{raw.order_number }}</td>
-            <td>{{raw.order_dow }}</td>
-            <td>{{raw.order_hour_if_day }}</td>
-            <td>{{raw.days_since_prior_order }}</td>
-            <td>{{raw.product_id }}</td>
-            <td>{{raw.add_to_cart_order }}</td>
-            <td>{{raw.reordered }}</td>
-            <td>{{raw.product_name }}</td>
-            <td>{{raw.aisle_id }}</td>
-            <td>{{raw.department_id }}</td>
-            <td>{{raw.department }}</td>
-            <td>{{raw.aisle }}</td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    {% else %}
-    <p>No Data.</p>
-    {% endif %}
-</body>
-</html>
-
--->

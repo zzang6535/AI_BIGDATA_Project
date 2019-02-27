@@ -3,47 +3,38 @@ from django.contrib.auth.views import LoginView
 from django.views.generic import CreateView
 from django.contrib import messages
 
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.urls import reverse
 from django.db.models import Count
 
-from .models import Question
-from .forms import LoginForm, LoadForm
+from .models import UserType
+
+from .forms import LoginForm
 
 import csv
 
 # Create your views here.
 def index(request) :
-    order_list = Question.objects.all()
+    if request.user.username and request.user.username != 'admin':
+        Grade = UserType.objects.get(id=int(request.user.username))
 
-    context = {
-        'order_list': order_list
-    }
+        context = {
+            'Grade': Grade
+        }
 
-    return render(request, 'polls/index.html', context)
+        return render(request, 'polls/index.html', context)
+
+    else :
+        return render(request, 'polls/index.html')
 
 def history(request) :
     li = request.POST.get("p")
-    order_list = Question.objects.order_by()
-    context = {
-        'order_list': order_list,
-    }
-    return render(request, 'polls/history.html', context)
+    return render(request, 'polls/history.html')
 
 def cart(request) :
     li = request.POST.get("p")
-    order_list = Question.objects.order_by()
-    context = {
-        'order_list': order_list,
-        'li' : li,
-    }
-    return render(request, 'polls/cart.html', context)
 
-# 회원가입
-class UserRegistrationView(CreateView):
-    model = get_user_model()
-    # form_class = UserRegistrationForm
-    success_url = '/article/'
+    return render(request, 'polls/cart.html')
 
 
 # 로그인
