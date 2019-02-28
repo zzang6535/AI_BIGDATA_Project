@@ -7,7 +7,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.db.models import Count
 
-from .models import UserType, Products, Basket, History, Association, Orders
+from .models import UserType, Products, Basket, History, Orders, Association
 
 from .forms import LoginForm
 
@@ -15,6 +15,7 @@ import csv
 
 # Create your views here.
 def index(request) :
+    Association.objects.all().delete()
     index = [i for i in range(5)];
 
     if request.user.username and request.user.username != 'admin':
@@ -48,11 +49,25 @@ def index(request) :
                     i += 1
                     if i == 20:
                         break
+        with open('recommendation.csv') as f:
+            rcd = None
+            reader = csv.reader(f)
+            for row in reader:
 
+                if p_first:
+                    p_first = False
+                    continue
+                rcd = Association(aisle_id=row[2],
+                                  user_pick=row[3],
+                                  recommend_id=row[4],
+                                  recommend=row[5])
+                rcd.save()
         product_list = Products.objects.order_by()
+        recommendation = Association.objects.order_by()
         context = {
             "product_list": product_list,
-            'index': index
+            'index': index,
+            "recommendation" : recommendation
         }
         return render(request, 'polls/index.html', context)
 
@@ -82,9 +97,26 @@ def cart(request) :
                      product_name=temp.product_name,
                      aisle_id=temp.aisle_id)
         bsk.save()
+    with open('recommendation.csv') as f:
+        rcd = None
+        p_first = True
+        reader = csv.reader(f)
+        for row in reader:
+
+            if p_first:
+                p_first = False
+                continue
+            rcd = Association(aisle_id=row[2],
+                              user_pick=row[3],
+                              recommend_id=row[4],
+                              recommend=row[5])
+            rcd.save()
+
     basket_list = Basket.objects.order_by()
+    recommendation = Association.objects.order_by()
     context = {
-        "basket_list": basket_list
+        "basket_list": basket_list,
+        "recommendation" : recommendation
     }
     return render(request, 'polls/cart.html',context)
 

@@ -12,11 +12,6 @@ class UserType(models.Model):
     user_id = models.IntegerField()
     user_grade = models.IntegerField()
 
-class Association(models.Model):
-    aisle_id = models.IntegerField()
-    user_pick = models.CharField(max_length = 200)
-    recommend = models.CharField(max_length = 200)
-
 class Aisle(models.Model):
     aisle_id = models.IntegerField()
     aisle = models.CharField(max_length = 200)
@@ -38,3 +33,10 @@ class Basket(models.Model):
 class History(models.Model):
     user_id = models.IntegerField()
     product_name = models.CharField(max_length=200)
+
+
+class Association(models.Model):
+    aisle_id = models.IntegerField()
+    user_pick = models.CharField(max_length = 200)
+    recommend_id = models.IntegerField()
+    recommend = models.CharField(max_length = 200)
