@@ -88,7 +88,7 @@
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron" style="width: 100%; text-align: center">
-      <img src="{% static 'image/logo1.jpg' %}" alt="로고" style="width: 100%; max-width: 380px; vertical-align: middle" />
+      <img src="{% static 'image/logo2.jpg' %}" alt="로고" style="width: 100%; max-width: 380px; vertical-align: middle" />
 
         <h1>Welcome to Daehyeon E Shop</h1>
         <p> 새로운 대현 온라인 쇼핑을 확인해보세요 </p>
@@ -96,35 +96,57 @@
     </div>
 
     <div class="container">
-      <!-- Example row of columns -->
-      <div class="row">
-        <!--form action="cart/" method="POST">
-          {% csrf_token %}
-          <h1>Today's Hot Deal</h1>
+      <div class="row row-offcanvas row-offcanvas-right">
+        <div class="col-xs-12 col-sm-9">
+          <p class="pull-right visible-xs">
+            <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
+          </p>
+          <!-- Main jumbotron for a primary marketing message or call to action -->
+
+
           <div class="row">
-            {% for raw in order_list %}
-            <div class="col-sm-6 col-md-4">
-              <div class="thumbnail">
-                <img src="{% static 'image/x.jpg' %}" alt="tomato">
-                <div class="caption">
-                  <h3>{{raw.product_name|truncatechars:30 }}</h3>
-                  <p>{{raw.product_id }}</p>
-                  <p align="right"><input type="checkbox" name="p[]"><a href="cart/" class="btn btn-primary" role="button">Cart</a></p>
-                </div>
-              </div>
-            </div>
+            {% for item in product_list %}
+            <div class="col-xs-4 col-lg-3" style="width: 200px; height: auto;">
+              {% if index|random == 0 %}
+              <a href="#" class="thumbnail" > <img src="{% static 'image/banana.jpg' %}"> </a>
+              {% elif index|random == 1 %}
+              <a href="#" class="thumbnail"> <img src="{% static 'image/apple.jpg' %}"> </a>
+              {% elif index|random == 2 %}
+              <a href="#" class="thumbnail"> <img src="{% static 'image/yogurt.jpg' %}"> </a>
+              {% elif index|random == 3 %}
+              <a href="#" class="thumbnail"> <img src="{% static 'image/strawberry.jpg' %}"> </a>
+              {% else %}
+              <a href="#" class="thumbnail"> <img src="{% static 'image/tomato.jpg' %}"> </a>
+              {% endif %}
+              <p>{{ item.product_name | truncatechars:15}}</p>
+              <table>
+                <tr>
+                  <td>
+                    <form action= "{% url 'cart' %}" method = "POST"> {% csrf_token %}
+                      <button class="btn btn-xs btn-default" type="submit" name="product_id" value = {{ item.product_id }} >장바구니 &raquo;</button></p>
+                    </form>
+                  </td>
+                  <td>
+                    <form action= "#" method = "POST"> {% csrf_token %}
+                      <button class="btn btn-xs btn-default" type="submit" name="deliver_id" >정기배송 &raquo;</button></p>
+                    </form>
+                  </td>
+                </tr>
+              </table>
+            </div><!--/.col-xs-6.col-lg-4-->
             {% endfor %}
+          </div><!--/row-->
+        </div><!--/.col-xs-12.col-sm-9-->
+
+        <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
+          <div class="list-group">
+            <a href="#" class="list-group-item active">Promotion</a>
+            {% if Grade.user_grade == 1 %}
+            <a href="#" class="thumbnail"> <img src="{% static 'image/logo1.jpg' %}"> </a>
+            {% endif %}
           </div>
-          <input type="submit" value="Load">
-        </form-->
-        <form action="product/" method = "POST"> {% csrf_token %}
-            <h1>Product List</h1>
-
-          <button type="submit"> 상품 보기</button>
-        </form>
-      </div>
-
-      <hr>
+        </div><!--/.sidebar-offcanvas-->
+      </div><!--/row-->
 
       <footer>
         <p>&copy; Company 2014</p>

@@ -1,6 +1,12 @@
-{% block title %}<title>로그인</title>{% endblock %}
+{% load static %}
+{% block title %}
+<title>로그인</title>
+<!-- Bootstrap core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+{% endblock %}
 
 {% block content %}
+
 <div class="panel panel-default registration">
     <div class="panel-heading">
         로그인하기

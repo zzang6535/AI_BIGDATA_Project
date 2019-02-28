@@ -7,7 +7,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.db.models import Count
 
-from .models import UserType, Products, Basket, History
+from .models import UserType, Products, Basket, History, Association, Orders
 
 from .forms import LoginForm
 
@@ -15,12 +15,16 @@ import csv
 
 # Create your views here.
 def index(request) :
+    index = [i for i in range(5)];
 
     if request.user.username and request.user.username != 'admin':
         Grade = UserType.objects.get(id=int(request.user.username))
+        product_list = Products.objects.order_by()
 
         context = {
-            'Grade': Grade
+            'Grade': Grade,
+            "product_list": product_list,
+            'index': index
         }
 
         return render(request, 'polls/index.html', context)
@@ -47,7 +51,8 @@ def index(request) :
 
         product_list = Products.objects.order_by()
         context = {
-            "product_list": product_list
+            "product_list": product_list,
+            'index': index
         }
         return render(request, 'polls/index.html', context)
 
